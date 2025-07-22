@@ -3,34 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Interaction Project</title>
-
+    <title>Stock Market Explorer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        #stockForm div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #error, #formError {
+            color: red;
+            margin: 10px 0;
+        }
+        .stock-data {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
-    <h1>JSON API Explorer</h1>
+    <h1>Stock Market Explorer</h1>
     
     <section>
-        <h2>Create New Post</h2>
-        <form id="postForm">
+        <h2>Stock Lookup</h2>
+        <form id="stockForm">
             <div>
-                <label for="titleInput">Title:</label>
-                <input type="text" id="titleInput" name="title" required>
+                <label for="symbolInput">Stock Symbol:</label>
+                <input type="text" id="symbolInput" name="symbol" placeholder="e.g., IBM, AAPL, MSFT" required>
             </div>
             <div>
-                <label for="bodyInput">Body:</label>
-                <textarea id="bodyInput" name="body" rows="4" required></textarea>
+                <label for="functionSelect">Data Type:</label>
+                <select id="functionSelect" name="function">
+                    <option value="GLOBAL_QUOTE">Current Quote</option>
+                    <option value="TIME_SERIES_DAILY">Daily Time Series</option>
+                    <option value="OVERVIEW">Company Overview</option>
+                </select>
             </div>
-            <button type="submit">Submit Post</button>
+            <div>
+                <label for="apiKeyInput">API Key:</label>
+                <input type="text" id="apiKeyInput" name="apiKey" placeholder="Your Alpha Vantage API Key" required>
+            </div>
+            <button type="submit">Get Stock Data</button>
         </form>
         <div id="formError"></div>
-        <div id="formSuccess"></div>
     </section>
 
     <section>
-        <h2>Posts</h2>
-        <button id="fetchButton">Fetch Posts</button>
+        <h2>Results</h2>
+        <div id="loading" style="display: none;">Loading...</div>
         <div id="error"></div>
-        <div id="postList"></div>
+        <div id="stockData"></div>
     </section>
 
     <script src="script.js"></script>
